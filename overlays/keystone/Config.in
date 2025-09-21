@@ -1,0 +1,6 @@
+menu "My Keystone external options"
+
+# Put external package or feature configs here
+# e.g. source "package/mypkg/Config.in"
+
+endmenu
