@@ -68,6 +68,12 @@ $(BUILDROOT_BUILDDIR)/.config: $(BUILDROOT_BUILDDIR)
 	echo "BR2_ROOTFS_OVERLAY=\"$(BUILDROOT_OVERLAYDIR) $(ADDITIONAL_OVERLAYS)\"" >> $(BUILDROOT_BUILDDIR)/.config
 	echo "BR2_CCACHE_DIR=$(BUILDROOT_CCACHE)" >> $(BUILDROOT_BUILDDIR)/.config
 
+.PHONE: force-configure
+force-configure: $(BUILDROOT_BUILDDIR)  
+	$(call log,info,Force new config with $(BUILDROOT_CONFIGFILE))
+	rm $(BUILDROOT_BUILDDIR)/.config
+	$(MAKE) $(BUILDROOT_MAKEFLAGS) $(BUILDROOT_CONFIGFILE)
+
 # Overlay
 
 #$(BUILDROOT_OVERLAYDIR)/.done: $(BUILDROOT_OVERLAYDIR)
@@ -93,6 +99,8 @@ buildroot: $(BUILDROOT_BUILDDIR)/.config
 # the repository configuration in sync with what the user is doing. It
 # automatically replaces the earlier specified configuration file in the
 # BR2_EXTERNAL directory.
+#
+
 
 .PHONY: buildroot-configure
 buildroot-configure: $(BUILDROOT_BUILDDIR)/.config
@@ -101,6 +109,8 @@ buildroot-configure: $(BUILDROOT_BUILDDIR)/.config
 	$(call log,debug,Saving new defconfig)
 	$(MAKE) $(BUILDROOT_MAKEFLAGS) savedefconfig
 	sed -i '/BR2_ROOTFS_OVERLAY.*/d' $(KEYSTONE_BR2_EXT)/keystone/configs/$(BUILDROOT_CONFIGFILE)
+
+
 
 .PHONY: linux-configure
 linux-configure: $(BUILDROOT_BUILDDIR)/.config

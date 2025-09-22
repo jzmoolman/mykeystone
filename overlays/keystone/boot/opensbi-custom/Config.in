@@ -1,0 +1,21 @@
+config BR2_PACKAGE_OPENSBI_CUSTOM
+    bool "Use custom OpenSBI platform"
+    help
+      Enable using a custom OpenSBI.
+
+if BR2_PACKAGE_OPENSBI_CUSTOM 
+
+  config BR2_PACKAGE_OPENSBI_CUSTOM_PLATFORM_NAME
+    string "Custom OpenSBI Platform Name"
+    default "generic"
+    help
+      Name of your OpenSBI platform (used as PLATFORM= in Makefile)
+
+  config BR2_PACKAGE_OPENSBI_CUSTOM_PLATFORM_DIR
+    string "Custom OpenSBI Platform Directory"
+    default "$(BR2_EXTERNAL_MYKEYSTONE_PATH)/boot/opensbi-custom/platform"
+    help
+      Directory containing platform.c and platform.mk
+
+endif   
+

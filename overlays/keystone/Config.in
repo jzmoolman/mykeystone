@@ -1,3 +1,5 @@
+source "$BR2_EXTERNAL_MYKEYSTONE_PATH/boot/opensbi-custom/Config.in"
+
 menu "My Keystone external options"
 
 # Put external package or feature configs here
